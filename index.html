@@ -1,1 +1,274 @@
-Hello, world!
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+
+	body {
+		margin: 0;
+		font-family: "4D Miner";
+		font-size: 24px;
+		text-align: center;
+		background-color: black;
+		overflow-x: hidden;
+	}
+
+	#bgVideoContainer {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	#bgVideo {
+		display: block;
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		z-index: -1;
+		-webkit-filter: blur(5px);
+		-moz-filter: blur(5px);
+		-o-filter: blur(5px);
+		-ms-filter: blur(5px);
+		filter: blur(5px);
+	}
+
+	@media screen and (max-aspect-ratio: 1920/1080) {
+		#bgVideo {
+			height: 100%;
+		}
+	}
+	@media screen and (min-aspect-ratio: 1920/1080) {
+		#bgVideo {
+			width: 100%;
+		}
+	}
+
+	.content {
+		display: inline-block;
+		border: 2px solid #c700c7;
+		border-radius: 20px;
+		background: rgba(0, 0, 0, 0.7);
+		color: #f1f1f1;
+		width: calc(100% - 500px);
+		min-width: 300px;
+		padding: 20px;
+		z-index: 50;
+		overflow-x: scroll;
+	}
+
+	.button-4d {
+		font-size: 25px;
+		box-sizing: border-box;
+		height: 50px;
+		padding-left: 20px;
+		padding-right: 20px;
+		border: 2px solid #c7c7c7;
+		border-radius: 2px;
+		background-color: rgba(0, 0, 0, 0.7);
+		color: #fff;
+		cursor: pointer;
+		font-family: "4D Miner";
+	}
+
+	.button-4d:active {
+		background-color: rgba(255, 255, 255, 0.7);
+		text-shadow: none !important;
+	}
+
+	.button-4d:active div {
+		visibility: hidden;
+	}
+
+	.button-4d div {
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		position: absolute;
+		top: 0px;
+		left: 5px;
+		border-radius: 2px;
+		z-index: -1;
+	}
+
+	#logo {
+		padding: 50px 0px 50px 0px;
+	}
+
+	@media screen and (max-width: 900px) {
+		#logo {
+			width: 672px;
+		}
+		.content {
+			width: calc(100% - 300px);
+		}
+	}
+	@media screen and (max-width: 700px) {
+		#logo {
+			width: 448px;
+		}
+		.content {
+			width: calc(100% - 200px);
+		}
+	}
+	@media screen and (max-width: 500px) {
+		#logo {
+			width: 224px;
+		}
+		.content {
+			width: calc(100% - 100px);
+		}
+	}
+	</style>
+</head>
+<body>
+
+	<img id="logo" src="logo.png">
+	<br>
+
+	<div id="bgVideoContainer">
+		<video autoplay muted loop id="bgVideo">
+			<source src="4dm_bg.mp4" type="video/mp4">
+			Your browser does not support HTML5 video.
+		</video>
+	</div>
+
+	<div class="content">
+		<h1>Welcome to the official 4D Miner website!</h1>
+		<a href="https://discord.gg/pMtZa6AVy2" target="_blank"><button class="button-4d shake-on-hover bar-button">Official Discord!</button></a>
+		<br>
+		<br>
+		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank"><button class="button-4d shake-on-hover bar-button">Wishlist On Steam!</button></a>
+		<br>
+		<br>
+		<p>4D Miner is a 4-dimensional survival sandbox game, where you can explore an infinite, procedurally-generated, 4-dimensional world!</p>
+		<br>
+		<h2>Latest Devlog:</h2>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/f4CMKoVgqOM?si=G0IEKXQBXBo3L2dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<br>
+		<br>
+		<h2>More Links:</h2>
+		<a href="https://4d-miner.fandom.com/"><button class="button-4d shake-on-hover bar-button">Wiki</button></a>
+		<br>
+		<br>
+		<a href="https://reddit.com/r/4D_Miner" target="_blank"><button class="button-4d shake-on-hover bar-button">Subreddit</button></a>
+		<br>
+		<br>
+		<a href="https://4d-modding.com" target="_blank"><button class="button-4d shake-on-hover bar-button">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></button></a>
+		<br>
+		<br>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<script>
+	const elementsA = document.querySelectorAll('.shake-on-hover');
+	elementsA.forEach(element =>
+	{
+		let intervalId;
+
+		let divA = document.createElement("div");
+		let divB = document.createElement("div");
+		
+		divA.style.border = "2px solid rgba(255, 0, 255, 0.7)";
+		divB.style.border = "2px solid rgba(0, 255, 255, 0.7)";
+
+		element.addEventListener('mouseover', () =>
+		{
+			element.appendChild(divA);
+			element.appendChild(divB);
+
+			intervalId = setInterval(() =>
+			{
+				const randomX = Math.random() * 5 - 2.5;
+				const randomY = Math.random() * 5 - 2.5;
+
+				element.style.textShadow = `rgba(255, 0, 255, 0.7) ${randomX / 10}em ${randomY / 10}em, rgba(0, 255, 255, 0.7) ${-randomX / 10}em ${-randomY / 10}em`;
+				divA.style.left = randomX;
+				divA.style.top = randomY;
+				divB.style.left = -randomX;
+				divB.style.top = -randomY;
+			}, 15);
+		});
+
+		element.addEventListener('mouseout', () =>
+		{
+			clearInterval(intervalId);
+			element.style.textShadow = ``;
+			element.removeChild(divA);
+			element.removeChild(divB);
+		});
+	});
+
+	const elementsB = document.querySelectorAll(".primary-button, .link, .bar-button");
+	elementsB.forEach((element, index) =>
+	{
+		const ogTrans = element.style.transition;
+		element.style.transition = `transform cubic-bezier(.06,.99,.83,.99) ${0.05 * (index + 1)}s`;
+		element.style.transform = "scale(0.0)";
+		setTimeout(() =>
+		{
+			element.style.transform = "scale(1.0)";
+			element.style.transition = ogTrans;
+		}, 50 * (index + 1));
+	});
+	
+	const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+	document.addEventListener("mousemove", (event) =>
+	{
+		const cursorX = event.clientX;
+		const cursorY = event.clientY;
+
+		headings.forEach((element) =>
+		{
+			const elementRect = element.getBoundingClientRect();
+			const elementCenterX = elementRect.left + elementRect.width / 2;
+			const elementCenterY = elementRect.top + elementRect.height / 2;
+
+			let offsetX = (cursorX - elementCenterX) / (elementRect.width / 300);
+			let offsetY = (cursorY - elementCenterY) / (elementRect.width / 300);
+
+			let maxDistance = Math.sqrt(
+				(elementRect.width / 2) * (elementRect.width / 2) +
+					(elementRect.height / 2) * (elementRect.height / 2)
+			) / 3;
+
+			// if(element.classList.contains("less-effect"))
+			// {
+			// 	maxDistance /= 2;
+			// }
+			// else if(element.classList.contains("less-effect1.5"))
+			// {
+			// 	maxDistance /= 4;
+			// 	offsetX *= 1.2;
+			// 	offsetY *= 1.2;
+			// }
+			// else if(element.classList.contains("less-effect2"))
+			// {
+			// 	maxDistance /= 6;
+			// 	offsetX *= 1.5;
+			// 	offsetY *= 2;
+			// }
+			// else if(element.classList.contains("less-effect4"))
+			// {
+			// 	maxDistance /= 10;
+			// 	offsetX *= 1.5;
+			// 	offsetY *= 4;
+			// }
+
+			const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+
+			const opacity = 0.7 * (1 - distance / maxDistance);
+
+			element.style.textShadow = `rgba(255, 0, 255, ${opacity}) ${offsetX / 10}px ${offsetY / 10}px, rgba(0, 255, 255, ${opacity}) ${-offsetX / 10}px ${-offsetY / 10}px`;
+		});
+	});
+	</script>
+
+</body>
+</html>
