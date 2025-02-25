@@ -14,9 +14,9 @@
 
 	#bgVideoContainer {
 		position: absolute;
-		z-index: -1;
 		top: 0;
 		left: 0;
+		z-index: -1;
 		width: 100vw;
 		height: 100vh;
 		overflow: hidden;
@@ -65,17 +65,59 @@
 		height: 50px;
 		padding-left: 20px;
 		padding-right: 20px;
-		border: 2px solid #c7c7c7;
+		/*border: 2px solid #c7c7c7;*/
+		border: 0px;
 		border-radius: 2px;
-		background-color: rgba(0, 0, 0, 0.7);
+		/*background-color: rgba(0, 0, 0, 0.7);*/
+		background-color: rgba(0, 0, 0, 0);
 		color: #fff;
 		cursor: pointer;
 		font-family: "4D Miner";
+		position: relative;
+		/* account for the negative ::after z-index */
+		z-index: 1;
+	}
+
+	/* this allows us to control the z-index of the button background */
+	.button-4d::before {
+		content: "";
+		display: block;
+		position: absolute;
+		border: 0px;
+		/*box-sizing: border-box;*/
+		border-radius: 2px;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 50px;
+		background-color: rgba(0, 0, 0, 0.7);
+		/* position background behind text and 4d glitch effect */
+		z-index: -1;
+	}
+
+	/* this allows us to control the z-index of the button border */
+	.button-4d::after {
+		content: "";
+		display: block;
+		position: absolute;
+		border: 2px solid #bcbcbc;
+		box-sizing: border-box;
+		left: 0;
+		right: 0;
+		top: 0;
+		border-radius: 2px;
+		height: 50px;
+		background-color: rgba(0, 0, 0, 0);
+		z-index: 1;
 	}
 
 	.button-4d:active {
-		background-color: rgba(255, 255, 255, 0.7);
+		/*background-color: rgba(255, 255, 255, 0.7);*/
 		text-shadow: none !important;
+	}
+
+	.button-4d:active::before {
+		background-color: rgba(255, 255, 255, 0.7);
 	}
 
 	.button-4d:active div {
@@ -85,12 +127,13 @@
 	.button-4d div {
 		width: 100%;
 		height: 100%;
-		box-sizing: border-box;
 		position: absolute;
 		top: 0px;
 		left: 5px;
+		box-sizing: border-box;
 		border-radius: 2px;
 		z-index: -1;
+		pointer-events: none;
 	}
 
 	#logo {
@@ -124,7 +167,6 @@
 	</style>
 </head>
 <body>
-
 	<img id="logo" src="logo.png">
 	<br>
 
@@ -137,10 +179,10 @@
 
 	<div class="content">
 		<h1>Welcome to the official 4D Miner website!</h1>
-		<a href="https://discord.gg/pMtZa6AVy2" target="_blank"><button class="button-4d shake-on-hover bar-button">Official Discord!</button></a>
+		<a href="https://discord.gg/pMtZa6AVy2" target="_blank"><button class="button-4d">Official Discord!</button></a>
 		<br>
 		<br>
-		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank"><button class="button-4d shake-on-hover bar-button">Wishlist On Steam!</button></a>
+		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank"><button class="button-4d">Wishlist On Steam!</button></a>
 		<br>
 		<br>
 		<p>4D Miner is a 4-dimensional survival sandbox game, where you can explore an infinite, procedurally-generated, 4-dimensional world!</p>
@@ -150,19 +192,19 @@
 		<br>
 		<br>
 		<h2>More Links:</h2>
-		<a href="https://youtube.com/Mashpoe/"><button class="button-4d shake-on-hover bar-button">YouTube Channel</button></a>
+		<a href="https://youtube.com/Mashpoe/"><button class="button-4d">YouTube Channel</button></a>
 		<br>
 		<br>
-		<a href="https://patreon.com/Mashpoe/"><button class="button-4d shake-on-hover bar-button">Patreon</button></a>
+		<a href="https://patreon.com/Mashpoe/"><button class="button-4d">Patreon</button></a>
 		<br>
 		<br>
-		<a href="https://4d-miner.fandom.com/"><button class="button-4d shake-on-hover bar-button">Wiki</button></a>
+		<a href="https://4d-miner.fandom.com/"><button class="button-4d">Wiki</button></a>
 		<br>
 		<br>
-		<a href="https://reddit.com/r/4D_Miner" target="_blank"><button class="button-4d shake-on-hover bar-button">Subreddit</button></a>
+		<a href="https://reddit.com/r/4D_Miner" target="_blank"><button class="button-4d">Subreddit</button></a>
 		<br>
 		<br>
-		<a href="https://4d-modding.com" target="_blank"><button class="button-4d shake-on-hover bar-button">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></button></a>
+		<a href="https://4d-modding.com" target="_blank"><button class="button-4d">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></button></a>
 		<br>
 		<br>
 	</div>
@@ -173,8 +215,8 @@
 	<br>
 
 	<script>
-	const elementsA = document.querySelectorAll('.shake-on-hover');
-	elementsA.forEach(element =>
+	const buttons4D = document.querySelectorAll('.button-4d');
+	buttons4D.forEach(element =>
 	{
 		let intervalId;
 
@@ -191,14 +233,27 @@
 
 			intervalId = setInterval(() =>
 			{
-				const randomX = Math.random() * 5 - 2.5;
-				const randomY = Math.random() * 5 - 2.5;
+				// get random point in circle with a given radius
+				const radius = 2.5 * 2;
 
-				element.style.textShadow = `rgba(255, 0, 255, 0.7) ${randomX / 10}em ${randomY / 10}em, rgba(0, 255, 255, 0.7) ${-randomX / 10}em ${-randomY / 10}em`;
-				divA.style.left = randomX;
-				divA.style.top = randomY;
-				divB.style.left = -randomX;
-				divB.style.top = -randomY;
+				let pt_angle_1 = Math.random() * 2 * Math.PI;
+				let pt_radius_sq_1 = Math.random() * radius * radius;
+				let pt_x_1 = Math.sqrt(pt_radius_sq_1) * Math.cos(pt_angle_1);
+				let pt_y_1 = Math.sqrt(pt_radius_sq_1) * Math.sin(pt_angle_1);
+
+				let pt_angle_2 = Math.random() * 2 * Math.PI;
+				let pt_radius_sq_2 = Math.random() * radius * radius;
+				let pt_x_2 = Math.sqrt(pt_radius_sq_2) * Math.cos(pt_angle_2);
+				let pt_y_2 = Math.sqrt(pt_radius_sq_2) * Math.sin(pt_angle_2);
+				
+				let pt_angle = Math.random() * 2 * Math.PI;
+				let pt_radius_sq = Math.random() * radius * radius;
+
+				element.style.textShadow = `rgba(255, 0, 255, 0.7) ${pt_x_1}px ${pt_y_1}px, rgba(0, 255, 255, 0.7) ${pt_x_2}px ${pt_y_2}px`;
+				divA.style.left = pt_x_1 + "px";
+				divA.style.top = pt_y_1 + "px";
+				divB.style.left = pt_x_2 + "px";
+				divB.style.top = pt_y_2 + "px";
 			}, 15);
 		});
 
@@ -209,19 +264,6 @@
 			element.removeChild(divA);
 			element.removeChild(divB);
 		});
-	});
-
-	const elementsB = document.querySelectorAll(".primary-button, .link, .bar-button");
-	elementsB.forEach((element, index) =>
-	{
-		const ogTrans = element.style.transition;
-		element.style.transition = `transform cubic-bezier(.06,.99,.83,.99) ${0.05 * (index + 1)}s`;
-		element.style.transform = "scale(0.0)";
-		setTimeout(() =>
-		{
-			element.style.transform = "scale(1.0)";
-			element.style.transition = ogTrans;
-		}, 50 * (index + 1));
 	});
 	
 	const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -241,31 +283,8 @@
 
 			let maxDistance = Math.sqrt(
 				(elementRect.width / 2) * (elementRect.width / 2) +
-					(elementRect.height / 2) * (elementRect.height / 2)
+				(elementRect.height / 2) * (elementRect.height / 2)
 			) / 3;
-
-			// if(element.classList.contains("less-effect"))
-			// {
-			// 	maxDistance /= 2;
-			// }
-			// else if(element.classList.contains("less-effect1.5"))
-			// {
-			// 	maxDistance /= 4;
-			// 	offsetX *= 1.2;
-			// 	offsetY *= 1.2;
-			// }
-			// else if(element.classList.contains("less-effect2"))
-			// {
-			// 	maxDistance /= 6;
-			// 	offsetX *= 1.5;
-			// 	offsetY *= 2;
-			// }
-			// else if(element.classList.contains("less-effect4"))
-			// {
-			// 	maxDistance /= 10;
-			// 	offsetX *= 1.5;
-			// 	offsetY *= 4;
-			// }
 
 			const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
 
@@ -275,6 +294,5 @@
 		});
 	});
 	</script>
-
 </body>
 </html>
