@@ -57,7 +57,7 @@
 		min-width: 300px;
 		padding: 20px;
 		z-index: 50;
-		overflow-x: scroll;
+		overflow-x: hidden;
 	}
 
 	.button-4d {
@@ -141,12 +141,40 @@
 		padding: 50px 0px 50px 0px;
 	}
 
+	.embed-container { 
+		position: relative; 
+		padding-bottom: 56.25%;
+		overflow: hidden;
+		max-width: 100%;
+		height: auto;
+	}
+	
+	@media screen and (max-width: 1200px) {
+		.content {
+			width: calc(100% - 300px);
+		}
+	}
 	@media screen and (max-width: 900px) {
 		#logo {
 			width: 672px;
 		}
 		.content {
-			width: calc(100% - 300px);
+			font-size: 25;
+		}
+		.content h1 {
+			font-size: 35;
+		}
+		.content h2 {
+			font-size: 30;
+		}
+		.embed-container iframe,
+		.embed-container object,
+		.embed-container embed { 
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 		}
 	}
 	@media screen and (max-width: 700px) {
@@ -155,14 +183,52 @@
 		}
 		.content {
 			width: calc(100% - 200px);
+			font-size: 20;
+		}
+		.content h1 {
+			font-size: 30;
+		}
+		.content h2 {
+			font-size: 25;
+		}
+		.button-4d {
+			height: 37.5px;
+			font-size: 18.75px;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.button-4d::before {
+			height: 37.5px;
+		}
+		.button-4d::after {
+			height: 37.5px;
 		}
 	}
-	@media screen and (max-width: 500px) {
+	@media screen and (max-width: 450px) {
 		#logo {
 			width: 224px;
 		}
 		.content {
 			width: calc(100% - 100px);
+			font-size: 15;
+		}
+		.content h1 {
+			font-size: 20;
+		}
+		.content h2 {
+			font-size: 20;
+		}
+		.button-4d {
+			height: 25px;
+			font-size: 12.5px;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		.button-4d::before {
+			height: 25px;
+		}
+		.button-4d::after {
+			height: 25px;
 		}
 	}
 	</style>
@@ -189,7 +255,9 @@
 		<p>4D Miner is a 4-dimensional survival sandbox game, where you can explore an infinite, procedurally-generated, 4-dimensional world!</p>
 		<br>
 		<h2>Latest Devlog:</h2>
-		<iframe width="560" height="315" src="https://www.youtube.com/embed/f4CMKoVgqOM?si=G0IEKXQBXBo3L2dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<div class="embed-container">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/f4CMKoVgqOM?si=G0IEKXQBXBo3L2dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</div>
 		<br>
 		<br>
 		<h2>More Links:</h2>
