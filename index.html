@@ -2,10 +2,11 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 	body {
 		margin: 0;
-		font-family: "4D Miner";
+		font-family: "4D Miner", "Press Start 2P", Monospace;
 		font-size: 24px;
 		text-align: center;
 		background-color: black;
@@ -41,7 +42,7 @@
 			height: 100%;
 		}
 	}
-	
+
 	@media screen and (min-aspect-ratio: 16/9) {
 		#bgVideo {
 			width: 100%;
@@ -224,6 +225,12 @@
 	@media screen and (max-width: 450px) {
 		#logo {
 			width: 224px;
+		}
+
+		@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+			#logo {
+				width: 336px;
+			}
 		}
 
 		.content {
