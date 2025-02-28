@@ -35,6 +35,7 @@
 		-ms-filter: blur(5px);
 		filter: blur(5px);
 		pointer-events: none;
+		transition: opacity 3s;
 	}
 
 	@media screen and (max-aspect-ratio: 16/9) {
@@ -268,7 +269,7 @@
 	<br>
 
 	<div id="bgVideoContainer">
-		<video autoplay muted loop id="bgVideo" disablepictureinpicture>
+		<video autoplay muted loop disablepictureinpicture id="bgVideo" style="opacity: 0;">
 			<source src="4dm_bg.mp4" type="video/mp4">
 			Your browser does not support HTML5 video.
 		</video>
@@ -392,6 +393,11 @@
 			element.style.textShadow = `rgba(255, 0, 255, ${opacity}) ${offsetX / 10}px ${offsetY / 10}px, rgba(0, 255, 255, ${opacity}) ${-offsetX / 10}px ${-offsetY / 10}px`;
 		});
 	});
+
+	document.getElementById("bgVideo").addEventListener('loadeddata', (event) =>
+	{
+		event.target.style.opacity = "1";
+	}, false);
 	</script>
 </body>
 </html>
