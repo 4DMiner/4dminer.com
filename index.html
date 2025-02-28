@@ -52,6 +52,7 @@
 
 	.content {
 		display: inline-block;
+		position: relative;
 		border: 2px solid #c700c7;
 		border-radius: 20px;
 		background: rgba(0, 0, 0, 0.7);
@@ -60,7 +61,45 @@
 		min-width: 300px;
 		padding: 20px;
 		z-index: 50;
-		overflow-x: hidden;
+	}
+
+	#Frank {
+		position: absolute;
+		width: 64px;
+		height: auto;
+		top: -64px;
+		right: 0px;
+	}
+
+	#Fernanda {
+		position: absolute;
+		width: 64px;
+		height: auto;
+		bottom: 0px;
+		left: 0px;
+	}
+
+	.jumping-forg {
+		animation-name: forg-jump;
+		animation-duration: 0.5s;
+	}
+
+	@keyframes forg-jump {
+		0% {
+			transform: translate(0px, 0px);
+			/* animation-timing-function: cubic-bezier(0.27, 0.88, .58, 1); */
+			animation-timing-function: cubic-bezier(0.29, 0.61, 0.63, 1);
+		}
+
+		50% {
+			transform: translate(0px, -100px);
+			/* animation-timing-function: cubic-bezier(0.42, 0, 0.73, 0.12); */
+			animation-timing-function: cubic-bezier(0.37, 0, 0.71, 0.39);
+		}
+
+		100% {
+			transform: translate(0px, 0px);
+		}
 	}
 
 	.button-4d {
@@ -149,6 +188,13 @@
 		overflow: hidden;
 		max-width: 100%;
 		height: auto;
+	}
+
+	@media screen and (max-width: 1600px) {
+		#Frank {
+			bottom: 0px;
+			top: auto;
+		}
 	}
 	
 	@media screen and (max-width: 1200px) {
@@ -306,6 +352,8 @@
 		<a href="https://4d-modding.com" target="_blank"><button class="button-4d">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></button></a>
 		<br>
 		<br>
+		<img src="Frank.gif" id="Frank">
+		<img src="Fernanda.gif" id="Fernanda">
 	</div>
 	<br>
 	<br>
@@ -314,6 +362,13 @@
 	<br>
 
 	<script>
+	let bgVideo = document.getElementById("bgVideo");
+	bgVideo.addEventListener('loadeddata', () =>
+	{
+		bgVideo.style.opacity = "1";
+	}, false);
+	bgVideo.src = "4dm_bg.mp4";
+
 	const buttons4D = document.querySelectorAll('.button-4d');
 	buttons4D.forEach(element =>
 	{
@@ -393,12 +448,29 @@
 		});
 	});
 
-	let bgVideo = document.getElementById("bgVideo");
-	bgVideo.addEventListener('loadeddata', () =>
+	let Frank = document.getElementById("Frank");
+	Frank.onclick = () =>
 	{
-		bgVideo.style.opacity = "1";
-	}, false);
-	bgVideo.src = "4dm_bg.mp4";
+		Frank.src = "FrankJump.png";
+		Frank.classList.toggle("jumping-forg");
+		window.setTimeout(() =>
+		{
+			Frank.src = "Frank.gif";
+			Frank.classList.toggle("jumping-forg");
+		}, 500);
+	}
+
+	let Fernanda = document.getElementById("Fernanda");
+	Fernanda.onclick = () =>
+	{
+		Fernanda.src = "FernandaJump.png";
+		Fernanda.classList.toggle("jumping-forg");
+		window.setTimeout(() =>
+		{
+			Fernanda.src = "Fernanda.gif";
+			Fernanda.classList.toggle("jumping-forg");
+		}, 500);
+	}
 	</script>
 </body>
 </html>
