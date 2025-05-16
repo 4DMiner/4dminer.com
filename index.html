@@ -1,484 +1,326 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>The Official 4D Miner Website!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
-	/*@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');*/
-	
-	@font-face {
-		font-family: "4D Miner";
-		src: url("4D Miner.ttf");
-	}
-	
-	body {
-		margin: 0;
-		font-family: "4D Miner";
-		font-size: 24px;
-		text-align: center;
-		background-color: black;
-		overflow-x: hidden;
-	}
-
-	#bgVideoContainer {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: -1;
-		width: 100vw;
-		height: 100vh;
-		overflow: hidden;
-	}
-
-	#bgVideo {
-		display: block;
-		position: fixed;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		-webkit-filter: blur(5px);
-		-moz-filter: blur(5px);
-		-o-filter: blur(5px);
-		-ms-filter: blur(5px);
-		filter: blur(5px);
-		pointer-events: none;
-		transition: opacity 3s;
-		object-fit: cover;
-	}
-
-	@media screen and (max-aspect-ratio: 16/9) {
-		#bgVideo {
-			height: 100%;
+		
+		@font-face {
+			font-family: "4D Miner";
+			src: url("4D Miner.ttf");
 		}
-	}
-
-	@media screen and (min-aspect-ratio: 16/9) {
-		#bgVideo {
-			width: 100%;
+		
+		body {
+			margin: 0;
 		}
-	}
-
-	.content {
-		display: inline-block;
-		position: relative;
-		border: 2px solid #c700c7;
-		border-radius: 20px;
-		background: rgba(0, 0, 0, 0.7);
-		color: #f1f1f1;
-		width: calc(100% - 500px);
-		min-width: 300px;
-		padding: 20px;
-		padding-bottom: 64px;
-		z-index: 50;
-	}
-
-	#Frank {
-		position: absolute;
-		width: 64px;
-		height: auto;
-		top: -64px;
-		right: 0px;
-	}
-
-	#Fernanda {
-		position: absolute;
-		width: 64px;
-		height: auto;
-		bottom: 0px;
-		left: 0px;
-	}
-
-	.jumping-forg {
-		animation-name: forg-jump;
-		animation-duration: 0.5s;
-	}
-
-	@keyframes forg-jump {
-		0% {
-			transform: translate(0px, 0px);
-			/* animation-timing-function: cubic-bezier(0.27, 0.88, .58, 1); */
-			animation-timing-function: cubic-bezier(0.29, 0.61, 0.63, 1);
+		a {
+			color: inherit;
+			text-decoration: inherit;
 		}
-
-		50% {
-			transform: translate(0px, -100px);
-			/* animation-timing-function: cubic-bezier(0.42, 0, 0.73, 0.12); */
-			animation-timing-function: cubic-bezier(0.37, 0, 0.71, 0.39);
+		
+		:root {
+			background-color: black;
+			overflow-x: hidden;
+			
+			font-family: "4D Miner";
+			color: #f1f1f1;
+			font-size: 24px;
+			text-align: center;
 		}
-
-		100% {
-			transform: translate(0px, 0px);
-		}
-	}
-
-	.button-4d {
-		font-size: 25px;
-		box-sizing: border-box;
-		height: 50px;
-		padding-left: 20px;
-		padding-right: 20px;
-		/*border: 2px solid #bcbcbc;*/
-		border: 0px;
-		border-radius: 2px;
-		/*background-color: rgba(0, 0, 0, 0.7);*/
-		background-color: rgba(0, 0, 0, 0);
-		color: #fff;
-		cursor: pointer;
-		font-family: "4D Miner", /*"Press Start 2P", */Monospace;
-		position: relative;
-		/* account for the negative ::after z-index */
-		z-index: 1;
-	}
-
-	/* this allows us to control the z-index of the button background */
-	.button-4d::before {
-		content: "";
-		display: block;
-		position: absolute;
-		border: 0px;
-		/*box-sizing: border-box;*/
-		border-radius: 2px;
-		left: 0;
-		right: 0;
-		top: 0;
-		height: 50px;
-		background-color: rgba(0, 0, 0, 0.7);
-		/* position background behind text and 4d glitch effect */
-		z-index: -1;
-	}
-
-	/* this allows us to control the z-index of the button border */
-	.button-4d::after {
-		content: "";
-		display: block;
-		position: absolute;
-		border: 2px solid #bcbcbc;
-		box-sizing: border-box;
-		left: 0;
-		right: 0;
-		top: 0;
-		border-radius: 2px;
-		height: 50px;
-		background-color: rgba(0, 0, 0, 0);
-		z-index: 1;
-	}
-
-	.button-4d:active {
-		/*background-color: rgba(255, 255, 255, 0.7);*/
-		text-shadow: none !important;
-	}
-
-	.button-4d:active::before {
-		background-color: rgba(255, 255, 255, 0.7);
-	}
-
-	.button-4d:active div {
-		visibility: hidden;
-	}
-
-	.button-4d div {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0px;
-		left: 5px;
-		box-sizing: border-box;
-		border-radius: 2px;
-		z-index: -1;
-		pointer-events: none;
-	}
-
-	#logo {
-		padding: 50px 0px 50px 0px;
-	}
-
-	.embed-container { 
-		position: relative; 
-		overflow: hidden;
-		max-width: 100%;
-		height: auto;
-	}
-
-	@media screen and (max-width: 1600px) {
-		#Frank {
-			bottom: 0px;
-			top: auto;
-		}
-	}
-	
-	@media screen and (max-width: 1200px) {
-		.content {
-			width: calc(100% - 300px);
-		}
-	}
-
-	@media screen and (max-width: 900px) {
-		#logo {
-			width: 672px;
-		}
-
-		.content {
-			font-size: 25;
-		}
-
-		.content h1 {
-			font-size: 35;
-		}
-
-		.content h2 {
-			font-size: 30;
-		}
-
-		.embed-container {
-			padding-bottom: 56.25%;
-		}
-
-		.embed-container iframe,	
-		.embed-container object,
-		.embed-container embed { 
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	@media screen and (max-width: 700px) {
-		#logo {
-			width: 448px;
-		}
-
-		.content {
-			width: calc(100% - 200px);
-			font-size: 20;
-		}
-
-		.content h1 {
-			font-size: 30;
-		}
-
-		.content h2 {
-			font-size: 25;
-		}
-
-		.button-4d {
-			height: 37.5px;
-			font-size: 18.75px;
-			padding-left: 15px;
-			padding-right: 15px;
-		}
-
-		.button-4d::before {
-			height: 37.5px;
-		}
-
-		.button-4d::after {
-			height: 37.5px;
-		}
-	}
-
-	@media screen and (max-width: 450px) {
-		#logo {
-			width: 224px;
-		}
-
-		@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-			#logo {
-				width: 336px;
+		
+		@media screen and (max-width: 900px) {
+			:root {
+				font-size: 17.5px;
 			}
 		}
-
-		.content {
-			width: calc(100% - 100px);
-			font-size: 15;
-		}
-
-		.content h1 {
-			font-size: 20;
-		}
-
-		.content h2 {
-			font-size: 20;
-		}
-
-		.button-4d {
-			height: 25px;
-			font-size: 12.5px;
-			padding-left: 10px;
-			padding-right: 10px;
-		}
-
-		.button-4d::before {
-			height: 25px;
-		}
-
-		.button-4d::after {
-			height: 25px;
-		}
-	}
-	</style>
-</head>
-<body>
-	<img id="logo" src="logo.png">
-	<br>
-
-	<div id="bgVideoContainer">
-		<video autoplay muted loop disablepictureinpicture id="bgVideo" style="opacity: 0;">
-			Your browser does not support HTML5 video.
-		</video>
-	</div>
-
-	<div class="content">
-		<h1>Welcome to the official 4D Miner website!</h1>
-		<a href="https://discord.gg/pMtZa6AVy2" target="_blank"><button class="button-4d">Official Discord!</button></a>
-		<br>
-		<br>
-		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank"><button class="button-4d">Wishlist on Steam!</button></a>
-		<br>
-		<br>
-		<p>4D Miner is a 4-dimensional survival sandbox game, where you can explore an infinite, procedurally-generated, 4-dimensional world!</p>
-		<br>
-		<h2>Latest Devlog:</h2>
-		<div class="embed-container">
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/f4CMKoVgqOM?si=G0IEKXQBXBo3L2dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-		</div>
-		<br>
-		<br>
-		<h2>More Links:</h2>
-		<a href="https://youtube.com/Mashpoe/"><button class="button-4d">YouTube Channel</button></a>
-		<br>
-		<br>
-		<a href="https://patreon.com/Mashpoe/"><button class="button-4d">Patreon</button></a>
-		<br>
-		<br>
-		<a href="https://4d-miner.fandom.com/"><button class="button-4d">Wiki</button></a>
-		<br>
-		<br>
-		<a href="https://reddit.com/r/4D_Miner" target="_blank"><button class="button-4d">Subreddit</button></a>
-		<br>
-		<br>
-		<a href="https://4d-modding.com" target="_blank"><button class="button-4d">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></button></a>
-		<br>
-		<br>
-		<img src="Frank.gif" id="Frank" title="Frank">
-		<img src="Fernanda.gif" id="Fernanda" title="Fernanda">
-	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-	<script>
-	let bgVideo = document.getElementById("bgVideo");
-	bgVideo.addEventListener('loadeddata', () =>
-	{
-		bgVideo.style.opacity = "1";
-	}, false);
-	bgVideo.src = "4dm_bg.mp4";
-
-	const buttons4D = document.querySelectorAll('.button-4d');
-	buttons4D.forEach(element =>
-	{
-		let intervalId;
-
-		let divA = document.createElement("div");
-		let divB = document.createElement("div");
 		
-		divA.style.border = "2px solid rgba(255, 0, 255, 0.7)";
-		divB.style.border = "2px solid rgba(0, 255, 255, 0.7)";
-
-		element.addEventListener('mouseover', () =>
-		{
-			element.appendChild(divA);
-			element.appendChild(divB);
-
-			intervalId = setInterval(() =>
-			{
-				// get random point in circle with a given radius
-				const radius = 2.5 * 2;
-
-				let pt_angle_1 = Math.random() * 2 * Math.PI;
-				let pt_radius_sq_1 = Math.random() * radius * radius;
-				let pt_x_1 = Math.sqrt(pt_radius_sq_1) * Math.cos(pt_angle_1);
-				let pt_y_1 = Math.sqrt(pt_radius_sq_1) * Math.sin(pt_angle_1);
-
-				let pt_angle_2 = Math.random() * 2 * Math.PI;
-				let pt_radius_sq_2 = Math.random() * radius * radius;
-				let pt_x_2 = Math.sqrt(pt_radius_sq_2) * Math.cos(pt_angle_2);
-				let pt_y_2 = Math.sqrt(pt_radius_sq_2) * Math.sin(pt_angle_2);
-				
-				let pt_angle = Math.random() * 2 * Math.PI;
-				let pt_radius_sq = Math.random() * radius * radius;
-
-				element.style.textShadow = `rgba(255, 0, 255, 0.7) ${pt_x_1}px ${pt_y_1}px, rgba(0, 255, 255, 0.7) ${pt_x_2}px ${pt_y_2}px`;
-				divA.style.left = pt_x_1 + "px";
-				divA.style.top = pt_y_1 + "px";
-				divB.style.left = pt_x_2 + "px";
-				divB.style.top = pt_y_2 + "px";
-			}, 15);
-		});
-
-		element.addEventListener('mouseout', () =>
-		{
-			clearInterval(intervalId);
-			element.style.textShadow = ``;
-			element.removeChild(divA);
-			element.removeChild(divB);
-		});
-	});
+		@media screen and (max-width: 700px) {
+			:root {
+				font-size: 14px;
+			}
+		}
+		
+		@media screen and (max-width: 450px) {
+			:root {
+				font-size: 10.5px;
+			}
+		}
+		
+		
+		
+		.center {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		
+		.button-4d {
+			margin-bottom: 1em;
+			
+			border-radius: 2px;
+			border: 2px solid #bcbcbc;
+			background-color: rgba(0, 0, 0, 0.7);
+			cursor: pointer;
+			padding: 10px 20px;
+			
+			color: #fff;
+		}
+		
+		
+		
+		#bgVideo {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			
+			z-index: -1;
+			pointer-events: none;
+			
+			transition: ease-in-out opacity 2s;
+			filter: blur(5px);
+		}
+		
+		#logo {
+			margin: 2em;
+			max-width: calc(100% - 4em);
+		}
+		
+		.content {
+			margin: 0 12%;
+			margin-bottom: 4em;
+			
+			border-radius: 0.8em;
+			border: 2px solid #c700c7;
+			background: rgba(0, 0, 0, 0.7);
+			padding: 1em 2em;
+			
+			/* for the forgs */
+			position: relative;
+			padding-bottom: 64px;
+		}
+		
+		#yt {
+			width: 100%;
+			max-width: 560px;
+			aspect-ratio: 16/9;
+			
+			margin-bottom: 2em;
+		}
+		
+		#Frank {
+			--stand: url("Frank.gif");
+			--jump: url("FrankJump.png");
+			top: -65px;
+			right: 0px;
+		}
+		@media screen and (max-width: 1600px) {
+			#Frank {
+				top: unset;
+				bottom: 0px;
+			}
+		}
+		
+		#Fernanda {
+			--stand: url("Fernanda.gif");
+			--jump: url("FernandaJump.png");
+			bottom: 0px;
+			left: 0px;
+		}
+		
+		
+		
+		.forg img {
+			position: absolute;
+			width: 64px;
+			height: auto;
+			content: var(--stand);
+			
+			animation-duration: 0.5s;
+		}
+		
+		/* We use the hidden checkbox to reset the animation state */
+		.forg input {
+			display: none;
+		}
+		input:checked       + img {
+			animation-name: forg-jump1;
+		}
+		input:not(:checked) + img {
+			animation-name: forg-jump2;
+		}
+		/* we need to duplicate this thing cause css kinda sucks */
+		@keyframes forg-jump1 {
+			from {
+				transform: translateY(0);
+				/* animation-timing-function: cubic-bezier(0.27, 0.88, .58, 1); */
+				animation-timing-function: cubic-bezier(0.29, 0.61, 0.63, 1);
+				pointer-events: none;
+				content: var(--jump);
+			}
+			
+			50% {
+				transform: translateY(-100px);
+				/* animation-timing-function: cubic-bezier(0.42, 0, 0.73, 0.12); */
+				animation-timing-function: cubic-bezier(0.37, 0, 0.71, 0.39);
+				pointer-events: none;
+				content: var(--jump);
+			}
+			
+			to {
+				transform: translateY(0);
+				pointer-events: none;
+				content: var(--jump);
+			}
+		}
+		@keyframes forg-jump2 {
+			from {
+				transform: translateY(0);
+				/* animation-timing-function: cubic-bezier(0.27, 0.88, .58, 1); */
+				animation-timing-function: cubic-bezier(0.29, 0.61, 0.63, 1);
+				pointer-events: none;
+				content: var(--jump);
+			}
+			
+			50% {
+				transform: translateY(-100px);
+				/* animation-timing-function: cubic-bezier(0.42, 0, 0.73, 0.12); */
+				animation-timing-function: cubic-bezier(0.37, 0, 0.71, 0.39);
+				pointer-events: none;
+				content: var(--jump);
+			}
+			
+			to {
+				transform: translateY(0);
+				pointer-events: none;
+				content: var(--jump);
+			}
+		}
+		
+	</style>
 	
-	const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-	document.addEventListener("mousemove", (event) =>
-	{
-		const cursorX = event.clientX;
-		const cursorY = event.clientY;
+	<script>
+		
+		let abbarationTexts;
+		
+		function refreshTexts(root) {
+			abbarationTexts = document.querySelectorAll(".fancy-text");
+			updateFancytexts();
+			
+			root.querySelectorAll('.shake-on-hover').forEach(element => {
+				let intervalId;
+			
+				element.addEventListener('mouseover', () => {
+					if (typeof intervalId !== 'undefined')
+						return;
+					intervalId = setInterval(() => {
+						const randomX = Math.random() * 2 - 1;
+						const randomY = Math.random() * 2 - 1;
+						const opacity = 0.7;
+						// const opacity = Math.random() * 0.7;
+			
+						element.style.textShadow = `rgba(255, 0, 255, ${opacity}) ${randomX /  5}em ${randomY /  5}em, rgba(0, 255, 255, ${opacity}) ${-randomX /  5}em ${-randomY /  5}em`;
+						element.style.boxShadow  = `rgba(255, 0, 255, ${opacity}) ${randomX / 10}em ${randomY / 10}em, rgba(0, 255, 255, ${opacity}) ${-randomX / 10}em ${-randomY / 10}em`;
+					}, 15);
+				}); 
+			
+				element.addEventListener('mouseout', () => {
+					clearInterval(intervalId);
+					intervalId = undefined;
+					element.style.textShadow = ``;
+					element.style.boxShadow  = ``;
+				});
+			});
+			
+			// boxes are scrollable so make them render text correctly
+			root.querySelectorAll(".scroll").forEach( elem => {
+				elem.addEventListener("scroll",updateFancytexts);
+				elem.addEventListener("scrollend",updateFancytexts);
+			});
+		}
+		
+		let cursorX = screen.width * 0.25;
+		let cursorY = screen.height * 0.5;
+		function updateFancytexts() {
+			abbarationTexts.forEach((element) => {
+				const elementRect = element.getBoundingClientRect();
+				const elementCenterX = ( elementRect.left + elementRect.right )/ 2;
+				const elementCenterY = ( elementRect.top + elementRect.bottom )/ 2;
+				const charsize = getComputedStyle(element)["font-size"].replace('px','');
+				const screensize = Math.sqrt( screen.width*screen.width + screen.height*screen.height );
+				
+				let offsetX = (cursorX - elementCenterX) * charsize/screensize;
+				let offsetY = (cursorY - elementCenterY) * charsize/screensize;
+				
+				let maxDistance = charsize * 0.5;
 
-		headings.forEach((element) =>
-		{
-			const elementRect = element.getBoundingClientRect();
-			const elementCenterX = elementRect.left + elementRect.width / 2;
-			const elementCenterY = elementRect.top + elementRect.height / 2;
+				const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
 
-			let offsetX = (cursorX - elementCenterX) / (elementRect.width / 300);
-			let offsetY = (cursorY - elementCenterY) / (elementRect.width / 300);
+				const opacity = 0.7*( 1 - distance / maxDistance );
 
-			let maxDistance = Math.sqrt(
-				(elementRect.width / 2) * (elementRect.width / 2) +
-				(elementRect.height / 2) * (elementRect.height / 2)
-			) / 3;
-
-			const distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
-
-			const opacity = 0.7 * (1 - distance / maxDistance);
-
-			element.style.textShadow = `rgba(255, 0, 255, ${opacity}) ${offsetX / 10}px ${offsetY / 10}px, rgba(0, 255, 255, ${opacity}) ${-offsetX / 10}px ${-offsetY / 10}px`;
+				element.style.textShadow = `rgba(255, 0, 255, ${opacity}) ${offsetX}px ${offsetY}px, rgba(0, 255, 255, ${opacity}) ${-offsetX}px ${-offsetY}px`;
+			});
+		}
+		
+		
+		
+		document.addEventListener("DOMContentLoaded", ()=>{
+			
+			// Video Background
+			let bgVideo = document.getElementById("bgVideo");
+			bgVideo.addEventListener('loadeddata', ()=> bgVideo.style.opacity = "1" );
+			bgVideo.src = "4dm_bg.mp4";
+			
+			// init fancy text effects for the page
+			refreshTexts(document);
+			
+			document.addEventListener("mousemove", (event) => {
+				cursorX = event.clientX;
+				cursorY = event.clientY;
+				updateFancytexts();
+			});
+			// document.body.addEventListener("mouseleave", () => {
+			// 	cursorX = 10000;
+			// 	cursorY = 10000;
+			// 	updateFancytexts();
+			// });
+			
+			
+			// scroll of body and html are weird, thx webspecs
+			// document is added manually, usually
+			document.addEventListener("scroll",updateFancytexts);
+			document.addEventListener("scrollend",updateFancytexts);
+			
 		});
-	});
-
-	let Frank = document.getElementById("Frank");
-	Frank.onclick = () =>
-	{
-		Frank.src = "FrankJump.png";
-		Frank.classList.toggle("jumping-forg");
-		window.setTimeout(() =>
-		{
-			Frank.src = "Frank.gif";
-			Frank.classList.toggle("jumping-forg");
-		}, 500);
-	}
-
-	let Fernanda = document.getElementById("Fernanda");
-	Fernanda.onclick = () =>
-	{
-		Fernanda.src = "FernandaJump.png";
-		Fernanda.classList.toggle("jumping-forg");
-		window.setTimeout(() =>
-		{
-			Fernanda.src = "Fernanda.gif";
-			Fernanda.classList.toggle("jumping-forg");
-		}, 500);
-	}
+		
 	</script>
+</head>
+<body class="center">
+	<img id="logo" src="logo.png">
+	
+	<video autoplay muted loop disablepictureinpicture id="bgVideo" style="opacity:0">
+		Your browser does not support HTML5 video.
+	</video>
+	
+	<div class="center content">
+		<h1 class="fancy-text">Welcome to the official 4D Miner website!</h1>
+		<a href="https://discord.gg/pMtZa6AVy2" target="_blank" class="button-4d shake-on-hover">Official Discord!</a>
+		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank" class="button-4d shake-on-hover">Wishlist on Steam!</a>
+		
+		<p style="margin-bottom: 2em">4D Miner is a 4-dimensional survival sandbox game, where you can explore an infinite, procedurally-generated, 4-dimensional world!</p>
+		
+		<h2 class="fancy-text">Latest Devlog:</h2>
+		<iframe id="yt" src="https://www.youtube.com/embed/f4CMKoVgqOM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		
+		<h2 class="fancy-text">More Links:</h2>
+		<a href="https://youtube.com/Mashpoe/" class="button-4d shake-on-hover">YouTube Channel</a>
+		<a href="https://patreon.com/Mashpoe/" class="button-4d shake-on-hover">Patreon</a>
+		<a href="https://4d-miner.fandom.com/" class="button-4d shake-on-hover">Wiki</a>
+		<a href="https://reddit.com/r/4D_Miner" target="_blank" class="button-4d shake-on-hover">Subreddit</a>
+		<a href="https://4d-modding.com" target="_blank" class="button-4d shake-on-hover">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></a>
+		
+		<label class="forg"><input type="checkbox"><img id="Frank"    title="Frank"   ></label>
+		<label class="forg"><input type="checkbox"><img id="Fernanda" title="Fernanda"></label>
+	</div>
 </body>
 </html>
