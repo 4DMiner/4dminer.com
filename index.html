@@ -13,6 +13,7 @@
 		body {
 			margin: 0;
 		}
+
 		a {
 			color: inherit;
 			text-decoration: inherit;
@@ -46,8 +47,6 @@
 			}
 		}
 		
-		
-		
 		.center {
 			display: flex;
 			flex-direction: column;
@@ -55,18 +54,83 @@
 		}
 		
 		.button-4d {
-			margin-bottom: 1em;
-			
+			font-size: 25px;
+			box-sizing: border-box;
+			height: 50px;
+			padding-left: 20px;
+			padding-right: 20px;
+			/*border: 2px solid #bcbcbc;*/
+			border: 0px;
 			border-radius: 2px;
-			border: 2px solid #bcbcbc;
-			background-color: rgba(0, 0, 0, 0.7);
-			cursor: pointer;
-			padding: 10px 20px;
-			
+			/*background-color: rgba(0, 0, 0, 0.7);*/
+			background-color: rgba(0, 0, 0, 0);
 			color: #fff;
+			cursor: pointer;
+			font-family: "4D Miner", "Press Start 2P", Monospace;
+			position: relative;
+			/* account for the negative ::after z-index */
+			z-index: 1;
+			padding-top: 12px;
+			margin-bottom: 1em;
 		}
-		
-		
+
+		/* this allows us to control the z-index of the button background */
+		.button-4d::before {
+			content: "";
+			display: block;
+			position: absolute;
+			border: 0px;
+			/*box-sizing: border-box;*/
+			border-radius: 2px;
+			left: 0;
+			right: 0;
+			top: 0;
+			height: 50px;
+			background-color: rgba(0, 0, 0, 0.7);
+			/* position background behind text and 4d glitch effect */
+			z-index: -1;
+		}
+
+		/* this allows us to control the z-index of the button border */
+		.button-4d::after {
+			content: "";
+			display: block;
+			position: absolute;
+			border: 2px solid #bcbcbc;
+			box-sizing: border-box;
+			left: 0;
+			right: 0;
+			top: 0;
+			border-radius: 2px;
+			height: 50px;
+			background-color: rgba(0, 0, 0, 0);
+			z-index: 1;
+		}
+
+		.button-4d:active {
+			/*background-color: rgba(255, 255, 255, 0.7);*/
+			text-shadow: none !important;
+		}
+
+		.button-4d:active::before {
+			background-color: rgba(255, 255, 255, 0.7);
+		}
+
+		.button-4d:active div {
+			visibility: hidden;
+		}
+
+		.button-4d div {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0px;
+			left: 5px;
+			box-sizing: border-box;
+			border-radius: 2px;
+			z-index: -1;
+			pointer-events: none;
+		}
 		
 		#bgVideo {
 			position: fixed;
@@ -114,6 +178,7 @@
 			top: -65px;
 			right: 0px;
 		}
+
 		@media screen and (max-width: 1600px) {
 			#Frank {
 				top: unset;
@@ -128,8 +193,6 @@
 			left: 0px;
 		}
 		
-		
-		
 		.forg img {
 			position: absolute;
 			width: 64px;
@@ -139,16 +202,19 @@
 			animation-duration: 0.5s;
 		}
 		
-		/* We use the hidden checkbox to reset the animation state */
+		/* we use the hidden checkbox to reset the animation state */
 		.forg input {
 			display: none;
 		}
+
 		input:checked       + img {
 			animation-name: forg-jump1;
 		}
+
 		input:not(:checked) + img {
 			animation-name: forg-jump2;
 		}
+
 		/* we need to duplicate this thing cause css kinda sucks */
 		@keyframes forg-jump1 {
 			from {
@@ -173,6 +239,7 @@
 				content: var(--jump);
 			}
 		}
+
 		@keyframes forg-jump2 {
 			from {
 				transform: translateY(0);
@@ -201,30 +268,35 @@
 	
 	<script>
 		
-		let abbarationTexts;
+		let aberrationTexts;
 		
-		function refreshTexts(root) {
-			abbarationTexts = document.querySelectorAll(".fancy-text");
+		function refreshTexts(root)
+		{
+			aberrationTexts = document.querySelectorAll(".fancy-text");
 			updateFancytexts();
 			
-			root.querySelectorAll('.shake-on-hover').forEach(element => {
+			// not currently used for buttons but could still be used later
+			root.querySelectorAll('.shake-on-hover').forEach(element =>
+			{
 				let intervalId;
 			
-				element.addEventListener('mouseover', () => {
+				element.addEventListener('mouseover', () =>
+				{
 					if (typeof intervalId !== 'undefined')
 						return;
 					intervalId = setInterval(() => {
 						const randomX = Math.random() * 2 - 1;
 						const randomY = Math.random() * 2 - 1;
 						const opacity = 0.7;
-						// const opacity = Math.random() * 0.7;
-			
+						//const opacity = Math.random() * 0.7;
+						
 						element.style.textShadow = `rgba(255, 0, 255, ${opacity}) ${randomX /  5}em ${randomY /  5}em, rgba(0, 255, 255, ${opacity}) ${-randomX /  5}em ${-randomY /  5}em`;
 						element.style.boxShadow  = `rgba(255, 0, 255, ${opacity}) ${randomX / 10}em ${randomY / 10}em, rgba(0, 255, 255, ${opacity}) ${-randomX / 10}em ${-randomY / 10}em`;
 					}, 15);
-				}); 
+				});
 			
-				element.addEventListener('mouseout', () => {
+				element.addEventListener('mouseout', () =>
+				{
 					clearInterval(intervalId);
 					intervalId = undefined;
 					element.style.textShadow = ``;
@@ -232,8 +304,9 @@
 				});
 			});
 			
-			// boxes are scrollable so make them render text correctly
-			root.querySelectorAll(".scroll").forEach( elem => {
+			// boxes are scrollable, so make them render text correctly
+			root.querySelectorAll(".scroll").forEach( elem =>
+			{
 				elem.addEventListener("scroll",updateFancytexts);
 				elem.addEventListener("scrollend",updateFancytexts);
 			});
@@ -241,8 +314,10 @@
 		
 		let cursorX = screen.width * 0.25;
 		let cursorY = screen.height * 0.5;
-		function updateFancytexts() {
-			abbarationTexts.forEach((element) => {
+		function updateFancytexts()
+		{
+			aberrationTexts.forEach((element) =>
+			{
 				const elementRect = element.getBoundingClientRect();
 				const elementCenterX = ( elementRect.left + elementRect.right )/ 2;
 				const elementCenterY = ( elementRect.top + elementRect.bottom )/ 2;
@@ -262,11 +337,65 @@
 			});
 		}
 		
-		
-		
-		document.addEventListener("DOMContentLoaded", ()=>{
-			
-			// Video Background
+		function initButtons4D()
+		{
+			const buttons4D = document.querySelectorAll('.button-4d');
+			buttons4D.forEach(element =>
+			{
+				let intervalId;
+				
+				let divA = document.createElement("div");
+				let divB = document.createElement("div");
+				
+				divA.style.border = "2px solid rgba(255, 0, 255, 0.7)";
+				divB.style.border = "2px solid rgba(0, 255, 255, 0.7)";
+
+				element.addEventListener('mouseover', () =>
+				{
+					element.appendChild(divA);
+					element.appendChild(divB);
+					console.log("hover");
+					
+					intervalId = setInterval(() =>
+					{
+						// get random point in circle with a given radius.
+						// the code is written this way to more closely replicate the actual in-game effect.
+						const radius = 2.5 * 2;
+
+						let pt_angle_1 = Math.random() * 2 * Math.PI;
+						let pt_radius_sq_1 = Math.random() * radius * radius;
+						let pt_x_1 = Math.sqrt(pt_radius_sq_1) * Math.cos(pt_angle_1);
+						let pt_y_1 = Math.sqrt(pt_radius_sq_1) * Math.sin(pt_angle_1);
+
+						let pt_angle_2 = Math.random() * 2 * Math.PI;
+						let pt_radius_sq_2 = Math.random() * radius * radius;
+						let pt_x_2 = Math.sqrt(pt_radius_sq_2) * Math.cos(pt_angle_2);
+						let pt_y_2 = Math.sqrt(pt_radius_sq_2) * Math.sin(pt_angle_2);
+						
+						let pt_angle = Math.random() * 2 * Math.PI;
+						let pt_radius_sq = Math.random() * radius * radius;
+
+						element.style.textShadow = `rgba(255, 0, 255, 0.7) ${pt_x_1}px ${pt_y_1}px, rgba(0, 255, 255, 0.7) ${pt_x_2}px ${pt_y_2}px`;
+						divA.style.left = pt_x_1 + "px";
+						divA.style.top = pt_y_1 + "px";
+						divB.style.left = pt_x_2 + "px";
+						divB.style.top = pt_y_2 + "px";
+					}, 15);
+				});
+
+				element.addEventListener('mouseout', () =>
+				{
+					clearInterval(intervalId);
+					element.style.textShadow = ``;
+					element.removeChild(divA);
+					element.removeChild(divB);
+				});
+			});
+		}
+
+		document.addEventListener("DOMContentLoaded", () =>
+		{
+			// video Background
 			let bgVideo = document.getElementById("bgVideo");
 			bgVideo.addEventListener('loadeddata', ()=> bgVideo.style.opacity = "1" );
 			bgVideo.src = "4dm_bg.mp4";
@@ -274,7 +403,8 @@
 			// init fancy text effects for the page
 			refreshTexts(document);
 			
-			document.addEventListener("mousemove", (event) => {
+			document.addEventListener("mousemove", (event) =>
+			{
 				cursorX = event.clientX;
 				cursorY = event.clientY;
 				updateFancytexts();
@@ -285,12 +415,12 @@
 			// 	updateFancytexts();
 			// });
 			
-			
 			// scroll of body and html are weird, thx webspecs
 			// document is added manually, usually
-			document.addEventListener("scroll",updateFancytexts);
-			document.addEventListener("scrollend",updateFancytexts);
-			
+			document.addEventListener("scroll", updateFancytexts);
+			document.addEventListener("scrollend", updateFancytexts);
+
+			initButtons4D();
 		});
 		
 	</script>
@@ -304,8 +434,8 @@
 	
 	<div class="center content">
 		<h1 class="fancy-text">Welcome to the official 4D Miner website!</h1>
-		<a href="https://discord.gg/pMtZa6AVy2" target="_blank" class="button-4d shake-on-hover">Official Discord!</a>
-		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank" class="button-4d shake-on-hover">Wishlist on Steam!</a>
+		<a href="https://discord.gg/pMtZa6AVy2" target="_blank" class="button-4d">Official Discord!</a>
+		<a href="https://store.steampowered.com/app/1941640/4D_Miner/" target="_blank" class="button-4d">Wishlist on Steam!</a>
 		
 		<p style="margin-bottom: 2em">4D Miner is a 4-dimensional survival sandbox game, where you can explore an infinite, procedurally-generated, 4-dimensional world!</p>
 		
@@ -313,11 +443,11 @@
 		<iframe id="yt" src="https://www.youtube.com/embed/f4CMKoVgqOM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 		
 		<h2 class="fancy-text">More Links:</h2>
-		<a href="https://youtube.com/Mashpoe/" class="button-4d shake-on-hover">YouTube Channel</a>
-		<a href="https://patreon.com/Mashpoe/" class="button-4d shake-on-hover">Patreon</a>
-		<a href="https://4d-miner.fandom.com/" class="button-4d shake-on-hover">Wiki</a>
-		<a href="https://reddit.com/r/4D_Miner" target="_blank" class="button-4d shake-on-hover">Subreddit</a>
-		<a href="https://4d-modding.com" target="_blank" class="button-4d shake-on-hover">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></a>
+		<a href="https://youtube.com/Mashpoe/" class="button-4d">YouTube Channel</a>
+		<a href="https://patreon.com/Mashpoe/" class="button-4d">Patreon</a>
+		<a href="https://4d-miner.fandom.com/" class="button-4d">Wiki</a>
+		<a href="https://reddit.com/r/4D_Miner" target="_blank" class="button-4d">Subreddit</a>
+		<a href="https://4d-modding.com" target="_blank" class="button-4d">Modding Tools<span style="font-size: 8px">(by Tr1Ngle)</span></a>
 		
 		<label class="forg"><input type="checkbox"><img id="Frank"    title="Frank"   ></label>
 		<label class="forg"><input type="checkbox"><img id="Fernanda" title="Fernanda"></label>
